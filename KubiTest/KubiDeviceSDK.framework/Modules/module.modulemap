@@ -1,0 +1,6 @@
+framework module KubiDeviceSDK {
+  umbrella header "KubiDeviceSDK.h"
+
+  export *
+  module * { export * }
+}

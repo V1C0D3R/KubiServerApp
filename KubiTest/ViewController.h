@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <KubiDeviceSDK/KubiDeviceSDK.h>
 
-@interface ViewController : UIViewController
+@interface ViewController : UIViewController <RRDeviceSDKDelegate>
 
 
 @end
