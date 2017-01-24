@@ -8,5 +8,6 @@ use_frameworks!
 inhibit_all_warnings!
 
 target 'KubiTest' do
- pod "GCDWebServer", "~> 3.0"
+ pod 'GCDWebServer', '~> 3.0'
+ pod 'lf', '~> 0.5.0'
 end

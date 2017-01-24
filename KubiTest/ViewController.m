@@ -7,11 +7,12 @@
 //
 
 #import "ViewController.h"
+#import "GCDWebServer.h"
+#import "GCDWebServerDataResponse.h"
 
 @interface ViewController ()
 
 @property (nullable, nonatomic, weak) RRDeviceSDK* sdk;
-@property BOOL isScanning;
 @property (nonatomic, strong) UIAlertController* connectionAlert;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *scanIndicator;
 @property (weak, nonatomic) IBOutlet UIButton *scanButton;
@@ -19,9 +20,12 @@
 @property (weak, nonatomic) IBOutlet UIView *controlView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *topConstraint;
 
+@property BOOL isScanning;
+@property GCDWebServer* webServer;
+
 @end
 
-@implementation ViewController 
+@implementation ViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -58,8 +62,30 @@
 //            NSLog(@"FAIL");
 //        }];
         NSLog(@"Identifier : %@ \n Type : %@", kubi.identifier, kubi.type);
-        
     }
+    
+    // Create server
+    self.webServer = [[GCDWebServer alloc] init];
+    
+    // Add a handler to respond to GET requests on any URL
+    __weak __typeof__(self) weakSelf = self;
+    [self.webServer addDefaultHandlerForMethod:@"GET"
+                                  requestClass:[GCDWebServerRequest class]
+                                  processBlock:^GCDWebServerResponse *(GCDWebServerRequest* request) {
+                                      
+                                      NSLog(@"New client!");
+                                      
+                                      dispatch_async(dispatch_get_main_queue(), ^{
+                                          [weakSelf handleRequest:request];
+                                      });
+                                      
+                                      return [GCDWebServerDataResponse responseWithHTML:@"<html><body><p>Hello World</p></body></html>"];
+                                      
+                                  }];
+    
+    // Start server on port 80
+    [self.webServer startWithPort:80 bonjourName:@"KUBI"];
+    NSLog(@"Visit %@ or %@ in your web browser", self.webServer.serverURL, self.webServer.bonjourServerURL);
 }
 
 -(void)deviceSDK:(RRDeviceSDK *)deviceSDK didChangeConnectionState:(RRDeviceConnectionState)connectionState {
@@ -214,5 +240,29 @@
                                 error:nil];
 }
 
+#pragma mark Requests handling
+
+-(void)handleRequest:(GCDWebServerRequest*) request {
+    RRKubi* kubi = (RRKubi*)self.sdk.connectedDevice;
+    if(kubi != nil && [request.URL.relativePath isEqualToString:@"/"]) {
+        if (request.query[@"panDelta"] != nil && request.query[@"panSpeed"] != nil && request.query[@"tiltDelta"] != nil && request.query[@"tiltSpeed"] != nil) {
+            double panDelta = [request.query[@"panDelta"] doubleValue] ?: 0;
+            double panSpeed = [request.query[@"panSpeed"] doubleValue] ?: 0;
+            double tiltDelta = [request.query[@"tiltDelta"] doubleValue] ?: 0;
+            double tiltSpeed = [request.query[@"tiltSpeed"] doubleValue] ?: 0;
+            [kubi incrementalMoveWithPanDelta:[NSNumber numberWithDouble:panDelta]
+                                   atPanSpeed:[NSNumber numberWithDouble:panSpeed]
+                                 andTiltDelta:[NSNumber numberWithDouble:tiltDelta]
+                                  atTiltSpeed:[NSNumber numberWithDouble:tiltSpeed]
+                                        error:nil];
+        } else {
+            [kubi incrementalMoveWithPanDelta:[NSNumber numberWithDouble:5]
+                           atPanSpeed:[NSNumber numberWithDouble:150]
+                         andTiltDelta:[NSNumber numberWithDouble:0]
+                          atTiltSpeed:[NSNumber numberWithDouble:0]
+                                error:nil];
+        }
+    }
+}
 
 @end
