@@ -1,6 +1,4 @@
 # Project files
-*.xcodeproj/xcuserdata/
+./**/*.xcodeproj/xcuserdata/
 *.xcodeproj/project.xcworkspace/xcuserdata/
 *.xcworkspace/xcuserdata/
-Pods/*.xcodeproj/xcuserdata/
-
