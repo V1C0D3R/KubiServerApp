@@ -3,3 +3,5 @@
 //
 
 @class KubiManager;
+
+#import "RRDeviceSDK+Swift.h"

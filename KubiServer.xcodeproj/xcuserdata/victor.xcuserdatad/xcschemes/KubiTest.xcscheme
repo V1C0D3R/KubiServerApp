@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "574E1ECF1E3199F100ED5425"
-               BuildableName = "KubiTest.app"
-               BlueprintName = "KubiTest"
-               ReferencedContainer = "container:KubiTest.xcodeproj">
+               BuildableName = "KubiServer.app"
+               BlueprintName = "KubiServer"
+               ReferencedContainer = "container:KubiServer.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "574E1ECF1E3199F100ED5425"
-            BuildableName = "KubiTest.app"
-            BlueprintName = "KubiTest"
-            ReferencedContainer = "container:KubiTest.xcodeproj">
+            BuildableName = "KubiServer.app"
+            BlueprintName = "KubiServer"
+            ReferencedContainer = "container:KubiServer.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -56,9 +56,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "574E1ECF1E3199F100ED5425"
-            BuildableName = "KubiTest.app"
-            BlueprintName = "KubiTest"
-            ReferencedContainer = "container:KubiTest.xcodeproj">
+            BuildableName = "KubiServer.app"
+            BlueprintName = "KubiServer"
+            ReferencedContainer = "container:KubiServer.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -75,9 +75,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "574E1ECF1E3199F100ED5425"
-            BuildableName = "KubiTest.app"
-            BlueprintName = "KubiTest"
-            ReferencedContainer = "container:KubiTest.xcodeproj">
+            BuildableName = "KubiServer.app"
+            BlueprintName = "KubiServer"
+            ReferencedContainer = "container:KubiServer.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

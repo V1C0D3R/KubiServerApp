@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		57341D521E38123D0051C8C4 /* RRDeviceSDK+Swift.m in Sources */ = {isa = PBXBuildFile; fileRef = 57341D511E38123D0051C8C4 /* RRDeviceSDK+Swift.m */; };
+		57341D561E3821B80051C8C4 /* ServerHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57341D551E3821B80051C8C4 /* ServerHelper.swift */; };
 		574E1EDE1E3199F200ED5425 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 574E1EDC1E3199F200ED5425 /* Main.storyboard */; };
 		574E1EE01E3199F200ED5425 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 574E1EDF1E3199F200ED5425 /* Assets.xcassets */; };
 		574E1EE31E3199F200ED5425 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 574E1EE11E3199F200ED5425 /* LaunchScreen.storyboard */; };
@@ -36,7 +38,12 @@
 /* Begin PBXFileReference section */
 		115657DC62723580E25DE7FC /* Pods_KubiTest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KubiTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3BE777C37B4D8717D93BE95E /* Pods-KubiTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KubiTest.debug.xcconfig"; path = "Pods/Target Support Files/Pods-KubiTest/Pods-KubiTest.debug.xcconfig"; sourceTree = "<group>"; };
-		574E1ED01E3199F200ED5425 /* KubiTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KubiTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		57341D501E38123D0051C8C4 /* RRDeviceSDK+Swift.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RRDeviceSDK+Swift.h"; sourceTree = "<group>"; };
+		57341D511E38123D0051C8C4 /* RRDeviceSDK+Swift.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RRDeviceSDK+Swift.m"; sourceTree = "<group>"; };
+		57341D531E38125B0051C8C4 /* KubiTest-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "KubiTest-Bridging-Header.h"; sourceTree = "<group>"; };
+		57341D541E3814AF0051C8C4 /* KubiTest-Swift.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "KubiTest-Swift.h"; sourceTree = "<group>"; };
+		57341D551E3821B80051C8C4 /* ServerHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ServerHelper.swift; path = ../ServerHelper.swift; sourceTree = "<group>"; };
+		574E1ED01E3199F200ED5425 /* KubiServer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KubiServer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		574E1EDD1E3199F200ED5425 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		574E1EDF1E3199F200ED5425 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		574E1EE21E3199F200ED5425 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -44,8 +51,7 @@
 		574E1EF01E319B6800ED5425 /* KubiDeviceSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = KubiDeviceSDK.framework; path = KubiTest/KubiDeviceSDK.framework; sourceTree = "<group>"; };
 		57557D861E36EC1D004A0044 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		57557DA61E36FC93004A0044 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		5774D08D1E36E272004C80DA /* KubiTest-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "KubiTest-Bridging-Header.h"; sourceTree = "<group>"; };
-		5774D08E1E36E272004C80DA /* KubiManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KubiManager.swift; sourceTree = "<group>"; };
+		5774D08E1E36E272004C80DA /* KubiManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KubiManager.swift; path = ../KubiManager.swift; sourceTree = "<group>"; };
 		B8CA91203831AC1D959EADB9 /* Pods-KubiTest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KubiTest.release.xcconfig"; path = "Pods/Target Support Files/Pods-KubiTest/Pods-KubiTest.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -62,10 +68,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		57341D581E3821E30051C8C4 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				5774D08E1E36E272004C80DA /* KubiManager.swift */,
+				57341D551E3821B80051C8C4 /* ServerHelper.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		574E1EC71E3199F100ED5425 = {
 			isa = PBXGroup;
 			children = (
-				574E1ED21E3199F200ED5425 /* KubiTest */,
+				574E1ED21E3199F200ED5425 /* KubiServer */,
 				574E1ED11E3199F200ED5425 /* Products */,
 				574E1EEC1E319B4700ED5425 /* Frameworks */,
 				D680C83BE1DB2DE610625F1C /* Pods */,
@@ -75,23 +90,27 @@
 		574E1ED11E3199F200ED5425 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				574E1ED01E3199F200ED5425 /* KubiTest.app */,
+				574E1ED01E3199F200ED5425 /* KubiServer.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		574E1ED21E3199F200ED5425 /* KubiTest */ = {
+		574E1ED21E3199F200ED5425 /* KubiServer */ = {
 			isa = PBXGroup;
 			children = (
+				57341D581E3821E30051C8C4 /* Helpers */,
 				57557DA61E36FC93004A0044 /* AppDelegate.swift */,
 				57557D861E36EC1D004A0044 /* ViewController.swift */,
-				5774D08E1E36E272004C80DA /* KubiManager.swift */,
 				574E1EDC1E3199F200ED5425 /* Main.storyboard */,
 				574E1EDF1E3199F200ED5425 /* Assets.xcassets */,
 				574E1EE11E3199F200ED5425 /* LaunchScreen.storyboard */,
 				574E1EE41E3199F200ED5425 /* Info.plist */,
-				5774D08D1E36E272004C80DA /* KubiTest-Bridging-Header.h */,
+				57341D531E38125B0051C8C4 /* KubiTest-Bridging-Header.h */,
+				57341D501E38123D0051C8C4 /* RRDeviceSDK+Swift.h */,
+				57341D511E38123D0051C8C4 /* RRDeviceSDK+Swift.m */,
+				57341D541E3814AF0051C8C4 /* KubiTest-Swift.h */,
 			);
+			name = KubiServer;
 			path = KubiTest;
 			sourceTree = "<group>";
 		};
@@ -116,9 +135,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		574E1ECF1E3199F100ED5425 /* KubiTest */ = {
+		574E1ECF1E3199F100ED5425 /* KubiServer */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 574E1EE71E3199F200ED5425 /* Build configuration list for PBXNativeTarget "KubiTest" */;
+			buildConfigurationList = 574E1EE71E3199F200ED5425 /* Build configuration list for PBXNativeTarget "KubiServer" */;
 			buildPhases = (
 				2BC03BB0DE0CEC78290AEB63 /* [CP] Check Pods Manifest.lock */,
 				574E1ECC1E3199F100ED5425 /* Sources */,
@@ -132,9 +151,9 @@
 			);
 			dependencies = (
 			);
-			name = KubiTest;
+			name = KubiServer;
 			productName = KubiTest;
-			productReference = 574E1ED01E3199F200ED5425 /* KubiTest.app */;
+			productReference = 574E1ED01E3199F200ED5425 /* KubiServer.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -154,7 +173,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 574E1ECB1E3199F100ED5425 /* Build configuration list for PBXProject "KubiTest" */;
+			buildConfigurationList = 574E1ECB1E3199F100ED5425 /* Build configuration list for PBXProject "KubiServer" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -167,7 +186,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				574E1ECF1E3199F100ED5425 /* KubiTest */,
+				574E1ECF1E3199F100ED5425 /* KubiServer */,
 			);
 		};
 /* End PBXProject section */
@@ -239,6 +258,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				57341D521E38123D0051C8C4 /* RRDeviceSDK+Swift.m in Sources */,
+				57341D561E3821B80051C8C4 /* ServerHelper.swift in Sources */,
 				57557D871E36EC1D004A0044 /* ViewController.swift in Sources */,
 				5774D08F1E36E272004C80DA /* KubiManager.swift in Sources */,
 				57557DA71E36FC93004A0044 /* AppDelegate.swift in Sources */,
@@ -372,7 +393,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.victornouvellet.KubiTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "KubiTest/KubiTest-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -396,7 +417,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.victornouvellet.KubiTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "KubiTest/KubiTest-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -405,7 +426,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		574E1ECB1E3199F100ED5425 /* Build configuration list for PBXProject "KubiTest" */ = {
+		574E1ECB1E3199F100ED5425 /* Build configuration list for PBXProject "KubiServer" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				574E1EE51E3199F200ED5425 /* Debug */,
@@ -414,7 +435,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		574E1EE71E3199F200ED5425 /* Build configuration list for PBXNativeTarget "KubiTest" */ = {
+		574E1EE71E3199F200ED5425 /* Build configuration list for PBXNativeTarget "KubiServer" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				574E1EE81E3199F200ED5425 /* Debug */,

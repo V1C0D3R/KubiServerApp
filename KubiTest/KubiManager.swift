@@ -14,7 +14,7 @@ class KubiManager: NSObject  {
     static let sharedInstance = KubiManager()
     
     //HERE is the bug: deviceSDK not available in Swift... Waiting for a framework update...
-    let kubiSdk = RRDeviceSDK.deviceSDK()
+    let kubiSdk: RRDeviceSDK = RRDeviceSDK.init(swiftSDK: ())
     
     var connectedDevice: RRDevice? { return self.kubiSdk.connectedDevice }
     var deviceConnectionState: RRDeviceConnectionState { return self.kubiSdk.deviceConnectionState }
@@ -45,6 +45,7 @@ class KubiManager: NSObject  {
     }
 }
 
+// MARK: - RRDeviceSDK delegate extension
 extension KubiManager: RRDeviceSDKDelegate {
     func configureRRDeviceSDKDelegate() {
         self.kubiSdk.delegate = self
@@ -56,5 +57,76 @@ extension KubiManager: RRDeviceSDKDelegate {
     
     func deviceSDK(_ deviceSDK: RRDeviceSDK, didChange connectionState: RRDeviceConnectionState) {
         self.deviceDidChangeConnectionCallback?(connectionState)
+    }
+}
+
+// MARK: - Sample movements extension
+extension KubiManager {
+    func tiltUp() {
+        guard let kubi = self.connectedDevice as? RRKubi
+            else {
+                print("[Warning] No Kubi connected = No remote control")
+                return
+        }
+        
+        do {
+            try kubi.incrementalMove(withPanDelta: NSNumber(value: 0),
+                                     atPanSpeed: NSNumber(value: 0),
+                                     andTiltDelta: NSNumber(value: 20),
+                                     atTiltSpeed: NSNumber(value: 150))
+        } catch {
+            print("Error doing incremental")
+        }
+    }
+    
+    func tiltDown() {
+        guard let kubi = self.connectedDevice as? RRKubi
+            else {
+                print("[Warning] No Kubi connected = No remote control")
+                return
+        }
+        
+        do {
+            try kubi.incrementalMove(withPanDelta: NSNumber(value: 0),
+                                     atPanSpeed: NSNumber(value: 0),
+                                     andTiltDelta: NSNumber(value: -20),
+                                     atTiltSpeed: NSNumber(value: 150))
+        } catch {
+            print("Error doing incremental")
+        }
+    }
+    
+    func panLeft() {
+        guard let kubi = self.connectedDevice as? RRKubi
+            else {
+                print("[Warning] No Kubi connected = No remote control")
+                return
+        }
+        
+        do {
+            try kubi.incrementalMove(withPanDelta: NSNumber(value: -20),
+                                     atPanSpeed: NSNumber(value: 150),
+                                     andTiltDelta: NSNumber(value: 0),
+                                     atTiltSpeed: NSNumber(value: 0))
+        } catch {
+            print("Error doing incremental")
+        }
+    }
+    
+    func panRight() {
+        guard let kubi = self.connectedDevice as? RRKubi
+            else {
+                print("[Warning] No Kubi connected = No remote control")
+                return
+        }
+        
+        do {
+            try kubi.incrementalMove(withPanDelta: NSNumber(value: 20),
+                                     atPanSpeed: NSNumber(value: 150),
+                                     andTiltDelta: NSNumber(value: 0),
+                                     atTiltSpeed: NSNumber(value: 0))
+        } catch {
+            print("Error doing incremental")
+        }
     }
 }

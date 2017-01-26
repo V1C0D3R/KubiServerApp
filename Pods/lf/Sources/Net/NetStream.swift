@@ -141,6 +141,12 @@ open class NetStream: NSObject {
             }
         }
     }
+    
+    open func attachCameraWithoutStart(_ camera: AVCaptureDevice?) {
+        DispatchQueue.main.async {
+            self.mixer.videoIO.attachCamera(camera)
+        }
+    }
 
     open func attachCamera(_ camera:AVCaptureDevice?) {
         DispatchQueue.main.async {

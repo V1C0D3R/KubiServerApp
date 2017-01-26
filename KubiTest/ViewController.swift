@@ -7,30 +7,55 @@
 //
 
 import UIKit
-import GCDWebServer
-import KubiDeviceSDK
+import AVFoundation
+import lf
+import VideoToolbox
 
 class ViewController: UIViewController {
     
     @IBOutlet weak var scanIndicator: UIActivityIndicatorView?
     @IBOutlet weak var scanButton: UIButton?
     @IBOutlet weak var connectionView: UIView?
+    @IBOutlet weak var autoConnectSwitch: UISwitch!
     @IBOutlet weak var controlView: UIView?
     @IBOutlet weak var topConstraint: NSLayoutConstraint?
+    @IBOutlet weak var logViewContainer: UIView!
+    @IBOutlet weak var webServerLog: UITextView!
+    @IBOutlet weak var liveView: UIView!
     
-    var connectionAlert: UIAlertController = UIAlertController()
-    var isScanning: Bool = false
-    var kubiManager: KubiManager = KubiManager.sharedInstance
-    var webServer: GCDWebServer?
+    fileprivate var connectionAlert: UIAlertController = UIAlertController()
+    fileprivate var isScanning: Bool = false
+    fileprivate var kubiManager: KubiManager = KubiManager.sharedInstance
+    fileprivate var serverHelper: ServerHelper = ServerHelper.sharedInstance
+    fileprivate var cameraPosition:AVCaptureDevicePosition = .front
+    fileprivate var autoConnect: Bool {
+        get {
+            return UserDefaults.standard.bool(forKey: "autoconnect")
+        }
+        set(value) {
+            UserDefaults.standard.set(value, forKey: "autoconnect")
+        }
+    }
     
+    //TODO: Move Streaming var/func to helper
+    fileprivate var camera = DeviceUtil.device(withPosition: .front)
+    var httpStream:HTTPStream? = nil
+    var streamingHttpService:HTTPService? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.autoConnectSwitch.isOn = self.autoConnect
+        
         self.configureKubiManagerCallbacks()
         
         self.updateControlButtons()
-        _ = self.startScanning()
+        
+        // Start searching for Kubis
+        self.startScanning()
+        
+        // Init web server
+        self.configureWebServer()
     }
     
     override func didReceiveMemoryWarning() {
@@ -39,7 +64,8 @@ class ViewController: UIViewController {
     
     @IBAction func scanButtonPressed(sender: UIButton) {
         self.updateControlButtons()
-        _ = self.startScanning()
+        self.kubiManager.disconnectDevice()
+        self.startScanning()
     }
     
     @IBAction func disconnectButtonPressed(sender: UIButton) {
@@ -56,43 +82,83 @@ class ViewController: UIViewController {
             //        }];
             print("Identifier : %@ \n Type : %@", kubi.identifier, kubi.type)
         }
+    }
+    
+    @IBAction func autoconnectSwitchValueChanged(_ sender: Any) {
+        self.autoConnect = self.autoConnectSwitch.isOn
+    }
+    
+    @IBAction func streamButtonPressed(sender: UIButton) {
+        self.configureStreaming()
+    }
+    
+    @IBAction func liveViewDoubleTapped(_ sender: Any) {
+        self.addMessageToLog(message: "")
+        self.cameraPosition = (self.cameraPosition == .front) ? .back : .front
         
-        // Create server
-        self.webServer = GCDWebServer()
-        
-        // Add a handler to respond to GET requests on any URL
-        self.webServer?.addDefaultHandler(forMethod: "GET",
-                                          request: GCDWebServerRequest.self,
-                                          asyncProcessBlock: { (request: GCDWebServerRequest?, completionBlock: GCDWebServerCompletionBlock?) in
-                                            print("New client!")
-                                            self.handleRequest(request: request, completionBlock: completionBlock)
-        })
-        
-        // Start server on port 80
-        self.webServer?.start(withPort: 80, bonjourName: "KUBI-Server")
-        
-        print("Visit \(self.webServer?.serverURL) or \(self.webServer?.bonjourServerURL) in your web browser")
-
+        /***********************************************************************************************
+         The line below let you change camera (front/back) without restarting the stream.
+         Cost: method attachCameraWithoutStart had to be added to lf's NetStream. If lf modifications
+         become not possible, replace the line below by this line:
+         
+         self.httpStream?.attachCamera(DeviceUtil.device(withPosition: self.cameraPosition))
+         
+         *********************** Method to add to NetStream after ‘pod install‘ ***********************
+         open func attachCameraWithoutStart(_ camera: AVCaptureDevice?) {
+            DispatchQueue.main.async {
+                self.mixer.videoIO.attachCamera(camera)
+            }
+         }
+        ************************************************************************************************/
+        self.httpStream?.attachCameraWithoutStart(DeviceUtil.device(withPosition: self.cameraPosition))
     }
     
     // MARK: Private methods
+    
+    private func configureWebServer() {
+        self.configureServerHelperDelegate()
+        self.serverHelper.kubiManager = self.kubiManager
+        
+        if self.serverHelper.initServer(), let safeServerUrl = self.serverHelper.serverUrl?.absoluteString {
+            let successMessage = "Visit \(safeServerUrl) in your web browser"
+            print(successMessage)
+            self.addMessageToLog(message: successMessage)
+        } else {
+            let failMessage = "Web server failed to initialize correctly. Are you connected to a Wifi network?"
+            print(failMessage)
+            self.addMessageToLog(message: failMessage)
+        }
+    }
+    
+    private func configureStreaming() {
+        if self.initHLS() {
+            let relativeUrl = "\(self.serverHelper.serverUrl?.baseURL)/kubi/playlist.m3u8"
+            self.addMessageToLog(message: "Streaming initialized with success. Here is the streaming url : \(relativeUrl)")
+        } else {
+            self.addMessageToLog(message: "Streaming failed to initialize. Check your Wifi connection and try again!")
+        }
+    }
     
     private func configureKubiManagerCallbacks() {
         self.kubiManager.deviceDidUpdateDeviceListCallback = { (deviceList: [Any]) in
             
             print("device SDK didUpdateDeviceList")
             
-            if self.kubiManager.deviceConnectionState == .connecting || self.kubiManager.deviceConnectionState == .connecting {
+            if self.kubiManager.deviceConnectionState == .connecting || self.kubiManager.deviceConnectionState == .connected {
                 self.stopScanning()
                 return
             }
             
             self.connectionAlert = UIAlertController(title: "Choose your device", message: "Here is the list of available devices", preferredStyle: .actionSheet)
             
-            for device in deviceList {
+            for (index, device) in deviceList.enumerated() {
                 guard let safeDevice = device as? RRKubi else {
                     continue
                 }
+                
+                //Auto connect
+                if index == 0 && self.autoConnect { self.kubiManager.kubiSdk.connect(safeDevice) }
+                    
                 let defaultAction: UIAlertAction = UIAlertAction(title: safeDevice.name(), style: .default, handler: { (action: UIAlertAction) in
                     
                     self.stopScanning()
@@ -104,7 +170,7 @@ class ViewController: UIViewController {
             let defaultAction: UIAlertAction = UIAlertAction(title: "Wait...", style: .destructive, handler: nil)
             self.connectionAlert.addAction(defaultAction)
             
-            let cancelAction: UIAlertAction = UIAlertAction(title: "Stop scanning", style: .destructive, handler: {
+            let cancelAction: UIAlertAction = UIAlertAction(title: "Stop scanning", style: .cancel, handler: {
                 (action: UIAlertAction) in
                 self.stopScanning()
             })
@@ -131,6 +197,8 @@ class ViewController: UIViewController {
                         print("[WARNING] Tilt or Pan not enabled properly")
                     }
                 }
+                if self.autoConnect { self.configureStreaming() }
+                
                 break
             case .connecting:
                 self.connectionAlert.dismiss(animated: true, completion: nil)
@@ -142,6 +210,28 @@ class ViewController: UIViewController {
             }
         }
     }
+    
+    func addMessageToLog(message: String) {
+        self.webServerLog.text = self.webServerLog.text.appending("\(message)\n")
+    }
+    
+    // MARK: - Scan functions
+    
+    @discardableResult func startScanning() -> Bool {
+        self.isScanning = true
+        self.scanButton?.isEnabled = false
+        self.scanIndicator?.startAnimating()
+        return self.kubiManager.startScan()
+    }
+    
+    func stopScanning() {
+        self.kubiManager.endScan()
+        self.scanIndicator?.stopAnimating()
+        self.scanButton?.isEnabled = true
+        self.isScanning = false
+    }
+    
+    // MARK: - Remote Control
     
     private func updateControlButtons() {
         if self.kubiManager.deviceConnectionState == .connected {
@@ -158,6 +248,7 @@ class ViewController: UIViewController {
             })
             
             self.controlView?.isHidden = false
+            self.logViewContainer?.isHidden = false
         }   else    {
             UIView.animate(withDuration: 1.5,
                            delay: 0,
@@ -165,139 +256,87 @@ class ViewController: UIViewController {
                            initialSpringVelocity: 0.5,
                            options: .curveEaseInOut,
                            animations: {
-                            self.topConstraint?.constant = 20
+                            self.topConstraint?.constant = 250
                             self.view.layoutIfNeeded()
             }, completion: { (complete: Bool) in
                 //What to do after completion
             })
             
             self.controlView?.isHidden = true
+            self.logViewContainer?.isHidden = true
         }
     }
-    
-    // MARK: - Scan functions
-    
-    func startScanning() -> Bool {
-        self.scanButton?.isEnabled = false
-        self.scanIndicator?.startAnimating()
-        self.isScanning = self.kubiManager.startScan()
-        return self.isScanning
-    }
-    
-    func stopScanning() {
-        self.kubiManager.endScan()
-        self.isScanning = false
-        self.scanButton?.isEnabled = false
-        self.scanIndicator?.stopAnimating()
-    }
-    
-    // MARK: - Remote Control
     
     @IBAction func tiltUpButtonPressed(sender: UIButton) {
-        guard let kubi = self.kubiManager.connectedDevice as? RRKubi
-            else {
-                print("[Warning] No Kubi connected = No remote control")
-                return
-        }
-        
-        do {
-            try kubi.incrementalMove(withPanDelta: NSNumber(value: 0),
-                             atPanSpeed: NSNumber(value: 0),
-                             andTiltDelta: NSNumber(value: 20),
-                             atTiltSpeed: NSNumber(value: 150))
-        } catch {
-            print("Error doing incremental")
-        }
+        self.kubiManager.tiltUp()
     }
     
     @IBAction func tiltDownButtonPressed(sender: UIButton) {
-        guard let kubi = self.kubiManager.connectedDevice as? RRKubi
-            else {
-                print("[Warning] No Kubi connected = No remote control")
-                return
-        }
-        
-        do {
-            try kubi.incrementalMove(withPanDelta: NSNumber(value: 0),
-                                     atPanSpeed: NSNumber(value: 0),
-                                     andTiltDelta: NSNumber(value: 20),
-                                     atTiltSpeed: NSNumber(value: 150))
-        } catch {
-            print("Error doing incremental")
-        }
-    }
-    
-    @IBAction func panRightButtonPressed(sender: UIButton) {
-        guard let kubi = self.kubiManager.connectedDevice as? RRKubi
-            else {
-                print("[Warning] No Kubi connected = No remote control")
-                return
-        }
-        
-        do {
-            try kubi.incrementalMove(withPanDelta: NSNumber(value: 0),
-                                     atPanSpeed: NSNumber(value: 0),
-                                     andTiltDelta: NSNumber(value: 20),
-                                     atTiltSpeed: NSNumber(value: 150))
-        } catch {
-            print("Error doing incremental")
-        }
+        self.kubiManager.tiltDown()
     }
     
     @IBAction func panLeftButtonPressed(sender: UIButton) {
-        guard let kubi = self.kubiManager.connectedDevice as? RRKubi
-            else {
-                print("[Warning] No Kubi connected = No remote control")
-                return
-        }
-        
-        do {
-            try kubi.incrementalMove(withPanDelta: NSNumber(value: 0),
-                                     atPanSpeed: NSNumber(value: 0),
-                                     andTiltDelta: NSNumber(value: 20),
-                                     atTiltSpeed: NSNumber(value: 150))
-        } catch {
-            print("Error doing incremental")
+        self.kubiManager.panLeft()
+    }
+    
+    @IBAction func panRightButtonPressed(sender: UIButton) {
+        self.kubiManager.panRight()
+    }
+}
+
+// MARK: - ServerHelper delegate extension
+extension ViewController: ServerHelperDelegate {
+    func configureServerHelperDelegate() {
+        self.serverHelper.delegate = self
+    }
+    
+    func serverHelperSucceededToSatisfyRequestCommand(url: URL?, path: String?, query: [AnyHashable : Any]?) {
+        DispatchQueue.main.async {
+            self.addMessageToLog(message: "[Request satisfied] URL: \((url?.absoluteString ?? "Hidden")!). Query : \((query?.description ?? "Hidden")!)")
         }
     }
     
-    // MARK: - Requests handling
+    func serverHelperFailedToSatisfyRequestCommand(error: NSError) {
+        DispatchQueue.main.async {
+            self.addMessageToLog(message:"Request failed : \(error.description)")
+        }
+    }
     
-    func handleRequest(request: GCDWebServerRequest?, completionBlock: GCDWebServerCompletionBlock?) {
-        
-        guard let device: RRDevice = self.kubiManager.connectedDevice,
-            let kubi: RRKubi = device as? RRKubi,
-            request?.url.relativePath == "/"
-            else {
-                print("No connected kubi")
-                let responseFail = GCDWebServerResponse()
-                completionBlock?(responseFail)
-                return
+    func serverHelperHaveNewClientConnected(url: URL?) {
+        DispatchQueue.main.async {
+            self.addMessageToLog(message:"New client connection. URL : \(url?.absoluteString ?? "Unknown url")")
         }
+    }
+}
+
+// MARK: - Streaming methods extension
+extension ViewController {
+    func initHLS() -> Bool {
+        self.httpStream = HTTPStream()
+        self.httpStream?.attachCamera(self.camera)
+        self.httpStream?.attachAudio(AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeAudio))
         
-        if request?.query["panDelta"] != nil && request?.query["panSpeed"] != nil &&
-            request?.query["tiltDelta"] != nil && request?.query["tiltSpeed"] != nil {
-            let panDelta: NSNumber = request?.query["panDelta"] as? NSNumber ?? 0
-            let panSpeed: NSNumber = request?.query["panSpeed"] as? NSNumber ?? 0
-            let tiltDelta: NSNumber = request?.query["tiltDelta"] as? NSNumber ?? 0
-            let tiltSpeed: NSNumber = request?.query["tiltSpeed"] as? NSNumber ?? 0
+        self.httpStream?.videoSettings = [
+            "bitrate": 160 * 1024, // video output bitrate
+            //            "dataRateLimits": [160 * 1024 / 8, 1], //optional kVTCompressionPropertyKey_DataRateLimits property
+            "profileLevel": kVTProfileLevel_H264_Baseline_5_1, // H264 Profile require "import VideoToolbox"
+            "maxKeyFrameIntervalDuration": 0.2, // key frame / sec
+        ]
+        
+        self.httpStream?.publish("kubi")
+        
+        if let safeHttpStream = self.httpStream {
+            let lfView:LFView = LFView(frame: self.liveView.bounds)
+            lfView.attachStream(httpStream)
+            self.streamingHttpService = HTTPService(domain: "", type: "_http._tcp", name: "lf", port: 80)
+            self.streamingHttpService?.startRunning()
+            self.streamingHttpService?.addHTTPStream(safeHttpStream)
             
-            do {
-                try kubi.incrementalMove(withPanDelta: panDelta, atPanSpeed: panSpeed, andTiltDelta: tiltDelta, atTiltSpeed: tiltSpeed)
-                let responseSuccess = GCDWebServerResponse()
-                completionBlock?(responseSuccess)
-            } catch {
-                print("Error doing incremental")
-                let responseFail = GCDWebServerResponse()
-                completionBlock?(responseFail)
-            }
+            self.liveView.addSubview(lfView)
             
+            return true
         } else {
-            
-            let responseFail = GCDWebServerResponse()
-            completionBlock?(responseFail)
+            return false
         }
-        
-        
     }
 }
