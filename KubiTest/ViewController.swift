@@ -132,7 +132,7 @@ class ViewController: UIViewController {
     
     private func configureStreaming() {
         if self.initHLS() {
-            let relativeUrl = "\(self.serverHelper.serverUrl?.baseURL)/kubi/playlist.m3u8"
+            let relativeUrl = "\((self.serverHelper.serverUrl?.host ?? "")!)/kubi/playlist.m3u8"
             self.addMessageToLog(message: "Streaming initialized with success. Here is the streaming url : \(relativeUrl)")
         } else {
             self.addMessageToLog(message: "Streaming failed to initialize. Check your Wifi connection and try again!")
@@ -318,6 +318,8 @@ extension ViewController {
         
         self.httpStream?.videoSettings = [
             "bitrate": 160 * 1024, // video output bitrate
+            "width": 272,
+            "height": 480,
             //            "dataRateLimits": [160 * 1024 / 8, 1], //optional kVTCompressionPropertyKey_DataRateLimits property
             "profileLevel": kVTProfileLevel_H264_Baseline_5_1, // H264 Profile require "import VideoToolbox"
             "maxKeyFrameIntervalDuration": 0.2, // key frame / sec
