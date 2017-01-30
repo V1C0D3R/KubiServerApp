@@ -24,12 +24,16 @@ class ServerHelper {
     var kubiManager: KubiManager? = nil
     var delegate: ServerHelperDelegate? = nil
     
+    // Paths
     enum ServerPath: String {
         case root = "/"
         case incremental = "/incremental"
         case absolute = "/absolute"
+        case live = "/live"
+        case livePlaylist = "/kubi/playlist.m3u8"
+        case lastImage = "/lastImage"
         
-        static let supportedPaths: [ServerPath] = [.root, .incremental, .absolute]
+        static let supportedPaths: [ServerPath] = [.root, .incremental, .absolute, .live, .livePlaylist, .lastImage]
     }
     
     // MARK: Other public properties
@@ -67,9 +71,12 @@ class ServerHelper {
     }
     
     func addControlHandlers(webServer: GCDWebServer?) {
+        webServer?.addHandler(forMethod: "GET", pathRegex: "/.*.ico", request: GCDWebServerRequest.self, asyncProcessBlock: self.handleRequest)
         webServer?.addHandler(forMethod: "GET", path: "/", request: GCDWebServerRequest.self, asyncProcessBlock: self.handleRequest)
         webServer?.addHandler(forMethod: "GET", path: "/incremental", request: GCDWebServerRequest.self, asyncProcessBlock: self.handleRequest)
         webServer?.addHandler(forMethod: "GET", path: "/absolute", request: GCDWebServerRequest.self, asyncProcessBlock: self.handleRequest)
+        webServer?.addHandler(forMethod: "GET", path: "/live", request: GCDWebServerRequest.self, asyncProcessBlock: self.handleRequest)
+        webServer?.addHandler(forMethod: "GET", path: "/lastImage", request: GCDWebServerRequest.self, asyncProcessBlock: self.handleRequest)
     }
     
     // MARK: Requests handling
@@ -86,21 +93,16 @@ class ServerHelper {
     
     func handleRequest(request: GCDWebServerRequest?, completionBlock: GCDWebServerCompletionBlock?) {
         
+        // Ignore .ico requests
+        if request?.url.absoluteString.contains(".ico") ?? false {
+            self.delegate?.serverHelperSucceededToSatisfyRequestCommand(url: request?.url, path: request?.path, query: request?.query)
+            let responseIgnore = GCDWebServerResponse(statusCode: 404)
+            print(".ico request ignored")
+            completionBlock?(responseIgnore)
+            return
+        }
+        
         guard let safeRequest = request, let supportedPath = ServerPath(rawValue: safeRequest.url.relativePath) else {
-            if let relativePath = request?.url.relativePath, relativePath.contains("/kubi/playlist.m3u8") {
-                self.delegate?.serverHelperSucceededToSatisfyRequestCommand(url: request?.url, path: request?.path, query: request?.query)
-                return
-            }
-            
-            // Ignore .ico requests
-            if request?.url.absoluteString.contains(".ico") ?? false {
-                self.delegate?.serverHelperSucceededToSatisfyRequestCommand(url: request?.url, path: request?.path, query: request?.query)
-                let responseIgnore = GCDWebServerResponse(statusCode: 404)
-                print(".ico request ignored")
-                completionBlock?(responseIgnore)
-                return
-            }
-            
             let errorDescription = "404: Not Found. Request on \((request?.url.absoluteString ?? "<Unknown URL>")!)"
             print(errorDescription)
             let error = self.error(withDescription: errorDescription, code: 404)
@@ -113,6 +115,26 @@ class ServerHelper {
         
         self.delegate?.serverHelperHaveNewClientConnected(url: safeRequest.url)
         
+        // Live streaming endpoints
+        if supportedPath == .livePlaylist {
+            self.delegate?.serverHelperSucceededToSatisfyRequestCommand(url: safeRequest.url, path: safeRequest.path, query: safeRequest.query)
+            return
+        } else if supportedPath == .live {
+            let liveWebPagePath = Bundle.main.path(forResource: "index", ofType: "html")
+            let variables = Dictionary(dictionaryLiteral: ("liveUrl", "\((self.serverUrl?.host ?? "")!)/kubi/playlist.m3u8"))
+            let response = GCDWebServerDataResponse(htmlTemplate: liveWebPagePath ?? "", variables: variables)
+            completionBlock?(response)
+            return
+        } else if supportedPath == .lastImage {
+            //TODO: Pick UIImage from camera and use this as fallback
+            let image = UIImage(named: "AppIcon60x60") ?? UIImage(named: "AppIcon60x60") ?? UIImage()
+            let data: Data = UIImagePNGRepresentation(image)!
+            let response = GCDWebServerDataResponse(data: data, contentType: "image/png")
+            completionBlock?(response)
+            return
+        }
+        
+        // Kubi device related endpoints
         guard let device: RRDevice = self.kubiManager?.connectedDevice, let kubi: RRKubi = device as? RRKubi else {
             let errorDescription = "[KubiError] No connected kubi"
             print(errorDescription)
@@ -124,7 +146,7 @@ class ServerHelper {
             return
         }
         
-        //Routing
+        // Kubi Routing
         if supportedPath == .root || supportedPath == .incremental {
             self.incrementalMoveHandling(request: safeRequest, kubi: kubi, completionBlock: completionBlock)
         } else if supportedPath == .absolute {
@@ -143,8 +165,10 @@ class ServerHelper {
             do {
                 try kubi.absoluteMove(toPan: pan, atPanSpeed: panSpeed, andTilt: tilt, atTiltSpeed: tiltSpeed)
                 
+                //TODO: Change to GCDWebServerDataResponse(jsonObject: Any!)
                 let responseSuccess = self.response(message: "{ \"status\": \"success\", \"data\":{\"kubiName\":\"\(kubi.name())\", \"description\": \"Kubi \(kubi.name()) just moved\"} }")
                 completionBlock?(responseSuccess)
+                
                 
                 self.delegate?.serverHelperSucceededToSatisfyRequestCommand(url: request.url, path: request.path, query: request.query)
             } catch {
@@ -180,6 +204,7 @@ class ServerHelper {
             do {
                 try kubi.incrementalMove(withPanDelta: panDelta, atPanSpeed: panSpeed, andTiltDelta: tiltDelta, atTiltSpeed: tiltSpeed)
                 
+                //TODO: Change to GCDWebServerDataResponse(jsonObject: Any!)
                 let responseSuccess = self.response(message: "{ \"status\": \"success\", \"data\":{\"kubiName\":\"\(kubi.name())\", \"description\": \"Kubi \(kubi.name()) just moved\"} }")
                 completionBlock?(responseSuccess)
                 
