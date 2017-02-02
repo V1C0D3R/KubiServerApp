@@ -16,10 +16,10 @@
 		57557D871E36EC1D004A0044 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57557D861E36EC1D004A0044 /* ViewController.swift */; };
 		57557DA71E36FC93004A0044 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57557DA61E36FC93004A0044 /* AppDelegate.swift */; };
 		5774D08F1E36E272004C80DA /* KubiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5774D08E1E36E272004C80DA /* KubiManager.swift */; };
-		577E51E91E42BB3400C5D9C9 /* Pods_KubiServer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9602CED71DD5FCC4E36DB838 /* Pods_KubiServer.framework */; };
 		57DC2E871E42C58800F9198B /* KubiDeviceSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 574E1EF01E319B6800ED5425 /* KubiDeviceSDK.framework */; };
 		57DC2E881E42C59600F9198B /* KubiDeviceSDK.framework in Resources */ = {isa = PBXBuildFile; fileRef = 574E1EF01E319B6800ED5425 /* KubiDeviceSDK.framework */; };
 		57DC2E8A1E42C6C600F9198B /* KubiDeviceSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 574E1EF01E319B6800ED5425 /* KubiDeviceSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		6BAAF9662F13E3362E73F14C /* Pods_KubiServer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AB305EE00F478FE6DB911CD /* Pods_KubiServer.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -52,9 +52,9 @@
 		57557D861E36EC1D004A0044 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		57557DA61E36FC93004A0044 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5774D08E1E36E272004C80DA /* KubiManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KubiManager.swift; path = ../KubiManager.swift; sourceTree = "<group>"; };
-		68D30283AC89DC8755406363 /* Pods-KubiServer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KubiServer.debug.xcconfig"; path = "Pods/Target Support Files/Pods-KubiServer/Pods-KubiServer.debug.xcconfig"; sourceTree = "<group>"; };
-		9602CED71DD5FCC4E36DB838 /* Pods_KubiServer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KubiServer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		E72AA1881D300F997C97F954 /* Pods-KubiServer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KubiServer.release.xcconfig"; path = "Pods/Target Support Files/Pods-KubiServer/Pods-KubiServer.release.xcconfig"; sourceTree = "<group>"; };
+		63D9B7FD4360B04A1D96CCBE /* Pods-KubiServer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KubiServer.release.xcconfig"; path = "Pods/Target Support Files/Pods-KubiServer/Pods-KubiServer.release.xcconfig"; sourceTree = "<group>"; };
+		6AB305EE00F478FE6DB911CD /* Pods_KubiServer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KubiServer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A700D72CD2137C7A352267A0 /* Pods-KubiServer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KubiServer.debug.xcconfig"; path = "Pods/Target Support Files/Pods-KubiServer/Pods-KubiServer.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,7 +63,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				57DC2E871E42C58800F9198B /* KubiDeviceSDK.framework in Frameworks */,
-				577E51E91E42BB3400C5D9C9 /* Pods_KubiServer.framework in Frameworks */,
+				6BAAF9662F13E3362E73F14C /* Pods_KubiServer.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -93,7 +93,7 @@
 				574E1ED21E3199F200ED5425 /* KubiServer */,
 				574E1ED11E3199F200ED5425 /* Products */,
 				574E1EEC1E319B4700ED5425 /* Frameworks */,
-				E121A42CE981A25E3E7FA62A /* Pods */,
+				E43AFC79AA647E2C38392B22 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -128,16 +128,16 @@
 			isa = PBXGroup;
 			children = (
 				574E1EF01E319B6800ED5425 /* KubiDeviceSDK.framework */,
-				9602CED71DD5FCC4E36DB838 /* Pods_KubiServer.framework */,
+				6AB305EE00F478FE6DB911CD /* Pods_KubiServer.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		E121A42CE981A25E3E7FA62A /* Pods */ = {
+		E43AFC79AA647E2C38392B22 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				68D30283AC89DC8755406363 /* Pods-KubiServer.debug.xcconfig */,
-				E72AA1881D300F997C97F954 /* Pods-KubiServer.release.xcconfig */,
+				A700D72CD2137C7A352267A0 /* Pods-KubiServer.debug.xcconfig */,
+				63D9B7FD4360B04A1D96CCBE /* Pods-KubiServer.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -149,13 +149,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 574E1EE71E3199F200ED5425 /* Build configuration list for PBXNativeTarget "KubiServer" */;
 			buildPhases = (
-				6F9DE8A7711C490F132BB100 /* [CP] Check Pods Manifest.lock */,
+				B3ED7289491399B1A4C8E1CD /* [CP] Check Pods Manifest.lock */,
 				574E1ECC1E3199F100ED5425 /* Sources */,
 				574E1ECD1E3199F100ED5425 /* Frameworks */,
 				574E1ECE1E3199F100ED5425 /* Resources */,
 				574E1EFB1E31A2CC00ED5425 /* Embed Frameworks */,
-				5E580BFD804AFB61668AB9F0 /* [CP] Embed Pods Frameworks */,
-				2FFFF5DF9B32F0663B20CA62 /* [CP] Copy Pods Resources */,
+				EC384E381A4C79A4D9A9C1D8 /* [CP] Embed Pods Frameworks */,
+				B763215AA904276C10992736 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -217,7 +217,22 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		2FFFF5DF9B32F0663B20CA62 /* [CP] Copy Pods Resources */ = {
+		B3ED7289491399B1A4C8E1CD /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		B763215AA904276C10992736 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -232,7 +247,7 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-KubiServer/Pods-KubiServer-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		5E580BFD804AFB61668AB9F0 /* [CP] Embed Pods Frameworks */ = {
+		EC384E381A4C79A4D9A9C1D8 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -245,21 +260,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-KubiServer/Pods-KubiServer-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		6F9DE8A7711C490F132BB100 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -389,7 +389,7 @@
 		};
 		574E1EE81E3199F200ED5425 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 68D30283AC89DC8755406363 /* Pods-KubiServer.debug.xcconfig */;
+			baseConfigurationReference = A700D72CD2137C7A352267A0 /* Pods-KubiServer.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ARCHS = "$(ARCHS_STANDARD)";
@@ -415,7 +415,7 @@
 		};
 		574E1EE91E3199F200ED5425 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E72AA1881D300F997C97F954 /* Pods-KubiServer.release.xcconfig */;
+			baseConfigurationReference = 63D9B7FD4360B04A1D96CCBE /* Pods-KubiServer.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ARCHS = "$(ARCHS_STANDARD)";

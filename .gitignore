@@ -2,3 +2,9 @@
 ./**/*.xcodeproj/xcuserdata/
 *.xcodeproj/project.xcworkspace/xcuserdata/
 *.xcworkspace/xcuserdata/
+
+# Kubi framework
+KubiServer/KubiDeviceSDK.framework/
+
+# Pods
+Pods/

@@ -10,6 +10,23 @@ This app consists in the following main components:
  * Exposing a Kubi control API on local iOS device network.
  * Exposing video live streaming.
 
+## Installation
+
+- Fork or download project.
+- Open Xcode.
+- Add Kubi framework to your project. You can download it [here](https://cdn.kubi.me/?prefix=Files/sdk-ios/).
+- From Terminal, use `pod install` to install [HaishinKit](https://github.com/shogo4405/lf.swift) and [GCDWebServer](https://github.com/swisspol/GCDWebServer) pods.
+- Add this code to NetStream.swift :
+ ```swift
+ open func attachCameraWithoutStart(_ camera: AVCaptureDevice?) {
+		DispatchQueue.main.async {
+           self.mixer.videoIO.attachCamera(camera)
+        }
+    }
+```
+         
+- Compile on your device. Kubi framework has not been compiled for simulator so you will not be able to install KubiServer app on it.
+
 ## Installation Requirements
 
 - Xcode
@@ -45,5 +62,6 @@ Feel free to submit pull requests.
 * [Accessors](http://accessors.org)
 
 ## See also
- * [Presentation]()
  * [Kubi](https://www.revolverobotics.com/)
+
+
