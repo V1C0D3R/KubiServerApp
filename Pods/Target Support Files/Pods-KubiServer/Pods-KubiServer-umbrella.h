@@ -10,8 +10,7 @@
 #endif
 #endif
 
-#import "lf.h"
 
-FOUNDATION_EXPORT double lfVersionNumber;
-FOUNDATION_EXPORT const unsigned char lfVersionString[];
+FOUNDATION_EXPORT double Pods_KubiServerVersionNumber;
+FOUNDATION_EXPORT const unsigned char Pods_KubiServerVersionString[];
 

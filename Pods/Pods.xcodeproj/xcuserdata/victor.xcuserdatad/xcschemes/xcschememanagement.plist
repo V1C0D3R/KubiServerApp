@@ -9,7 +9,7 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Pods-KubiTest.xcscheme</key>
+		<key>Pods-KubiServer.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -32,17 +32,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>4B635BC71606007C4BAC3A39034100C9</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>4DEA837E908ECD36C04338B7C971FD87</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>662BBC323F12AD69AE92C40C518AF27E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F226AB1972E524CDC5C3C0379C6B2F92</key>
 		<dict>
 			<key>primary</key>
 			<true/>
