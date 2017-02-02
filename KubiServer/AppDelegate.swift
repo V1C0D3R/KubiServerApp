@@ -1,6 +1,6 @@
 //
 //  AppDelegate.swift
-//  KubiTest
+//  KubiServer
 //
 //  Created by Victor Nouvellet on 1/23/17.
 //  Copyright © 2017 Victor Nouvellet Inc. All rights reserved.

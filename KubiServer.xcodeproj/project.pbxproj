@@ -13,13 +13,13 @@
 		574E1EDE1E3199F200ED5425 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 574E1EDC1E3199F200ED5425 /* Main.storyboard */; };
 		574E1EE01E3199F200ED5425 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 574E1EDF1E3199F200ED5425 /* Assets.xcassets */; };
 		574E1EE31E3199F200ED5425 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 574E1EE11E3199F200ED5425 /* LaunchScreen.storyboard */; };
-		574E1EFA1E31A2CC00ED5425 /* KubiDeviceSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 574E1EF01E319B6800ED5425 /* KubiDeviceSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		574E1EFD1E31A2F400ED5425 /* KubiDeviceSDK.framework in Resources */ = {isa = PBXBuildFile; fileRef = 574E1EF01E319B6800ED5425 /* KubiDeviceSDK.framework */; };
 		57557D871E36EC1D004A0044 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57557D861E36EC1D004A0044 /* ViewController.swift */; };
 		57557DA71E36FC93004A0044 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57557DA61E36FC93004A0044 /* AppDelegate.swift */; };
 		5774D08F1E36E272004C80DA /* KubiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5774D08E1E36E272004C80DA /* KubiManager.swift */; };
-		577E51E81E42B99A00C5D9C9 /* KubiDeviceSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 574E1EF01E319B6800ED5425 /* KubiDeviceSDK.framework */; };
 		577E51E91E42BB3400C5D9C9 /* Pods_KubiServer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9602CED71DD5FCC4E36DB838 /* Pods_KubiServer.framework */; };
+		57DC2E871E42C58800F9198B /* KubiDeviceSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 574E1EF01E319B6800ED5425 /* KubiDeviceSDK.framework */; };
+		57DC2E881E42C59600F9198B /* KubiDeviceSDK.framework in Resources */ = {isa = PBXBuildFile; fileRef = 574E1EF01E319B6800ED5425 /* KubiDeviceSDK.framework */; };
+		57DC2E8A1E42C6C600F9198B /* KubiDeviceSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 574E1EF01E319B6800ED5425 /* KubiDeviceSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -29,7 +29,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				574E1EFA1E31A2CC00ED5425 /* KubiDeviceSDK.framework in Embed Frameworks */,
+				57DC2E8A1E42C6C600F9198B /* KubiDeviceSDK.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -48,7 +48,7 @@
 		574E1EDF1E3199F200ED5425 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		574E1EE21E3199F200ED5425 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		574E1EE41E3199F200ED5425 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		574E1EF01E319B6800ED5425 /* KubiDeviceSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = KubiDeviceSDK.framework; path = KubiTest/KubiDeviceSDK.framework; sourceTree = "<group>"; };
+		574E1EF01E319B6800ED5425 /* KubiDeviceSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = KubiDeviceSDK.framework; path = KubiServer/KubiDeviceSDK.framework; sourceTree = "<group>"; };
 		57557D861E36EC1D004A0044 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		57557DA61E36FC93004A0044 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5774D08E1E36E272004C80DA /* KubiManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KubiManager.swift; path = ../KubiManager.swift; sourceTree = "<group>"; };
@@ -62,8 +62,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				57DC2E871E42C58800F9198B /* KubiDeviceSDK.framework in Frameworks */,
 				577E51E91E42BB3400C5D9C9 /* Pods_KubiServer.framework in Frameworks */,
-				577E51E81E42B99A00C5D9C9 /* KubiDeviceSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -121,8 +121,7 @@
 				57341D511E38123D0051C8C4 /* RRDeviceSDK+Swift.m */,
 				57341D541E3814AF0051C8C4 /* KubiTest-Swift.h */,
 			);
-			name = KubiServer;
-			path = KubiTest;
+			path = KubiServer;
 			sourceTree = "<group>";
 		};
 		574E1EEC1E319B4700ED5425 /* Frameworks */ = {
@@ -207,8 +206,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				57DC2E881E42C59600F9198B /* KubiDeviceSDK.framework in Resources */,
 				570D72951E3FC98C0072AD75 /* index.html in Resources */,
-				574E1EFD1E31A2F400ED5425 /* KubiDeviceSDK.framework in Resources */,
 				574E1EE31E3199F200ED5425 /* LaunchScreen.storyboard in Resources */,
 				574E1EE01E3199F200ED5425 /* Assets.xcassets in Resources */,
 				574E1EDE1E3199F200ED5425 /* Main.storyboard in Resources */,
@@ -400,13 +399,14 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/KubiTest",
+					"$(PROJECT_DIR)/KubiServer",
 				);
-				INFOPLIST_FILE = KubiTest/Info.plist;
+				INFOPLIST_FILE = KubiServer/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.victornouvellet.KubiServer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "KubiTest/KubiTest-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "KubiServer/KubiTest-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -425,13 +425,14 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/KubiTest",
+					"$(PROJECT_DIR)/KubiServer",
 				);
-				INFOPLIST_FILE = KubiTest/Info.plist;
+				INFOPLIST_FILE = KubiServer/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.victornouvellet.KubiServer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "KubiTest/KubiTest-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "KubiServer/KubiTest-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
