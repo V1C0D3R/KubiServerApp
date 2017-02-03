@@ -1,36 +1,42 @@
-# ![KubiServer](KubiTest/Assets.xcassets/AppIcon.appiconset/icon-AppStore@2x.png)
+<p align="center">
+  <img src="https://cloud.githubusercontent.com/assets/4340716/22605826/6cb27cfe-ea06-11e6-803c-f069feb71760.png" alt="Kubi Server App" height="200" width="200"/>
+</p>
+# Kubi Server App [![GitHub license](https://img.shields.io/badge/license-New%20BSD-blue.svg)](https://raw.githubusercontent.com/V1C0D3R/KubiServerApp/master/LICENCE.txt)
+![platform](https://img.shields.io/badge/platform-ios-lightgrey.svg)
 
-# Kubi Server
-Control your Kubi
+Control your Kubi on your local network with a iOS gateway.
 
 This repository contains the source code for Kubi Server iOS app.
 
-This app consists in the following main components:
+This app consists in:
 
  * Exposing a Kubi control API on local iOS device network.
- * Exposing video live streaming.
+ * Exposing a video live streaming endpoint.
+
+## Installation Requirements
+
+- Xcode
+- Cocoapods
+
+> *Kubi framework has not been compiled for simulator so you will not be able to install KubiServer app on it.*
 
 ## Installation
 
-- Fork or download project.
+1. Fork or download project.
 - Open Xcode.
 - Add Kubi framework to your project. You can download it [here](https://cdn.kubi.me/?prefix=Files/sdk-ios/).
 - From Terminal, use `pod install` to install [HaishinKit](https://github.com/shogo4405/lf.swift) and [GCDWebServer](https://github.com/swisspol/GCDWebServer) pods.
 - Add this code to NetStream.swift :
  ```swift
  open func attachCameraWithoutStart(_ camera: AVCaptureDevice?) {
-		DispatchQueue.main.async {
-           self.mixer.videoIO.attachCamera(camera)
-        }
-    }
+ 		DispatchQueue.main.async {
+ 			self.mixer.videoIO.attachCamera(camera)
+		}
+}
 ```
          
-- Compile on your device. Kubi framework has not been compiled for simulator so you will not be able to install KubiServer app on it.
+6. Compile on your device.
 
-## Installation Requirements
-
-- Xcode
-- Cocoapods installed
 
 ## User Steps after installation
 
@@ -39,7 +45,7 @@ This app consists in the following main components:
 - Tap 'Stream camera' button to deploy streaming API
 - Use control & streaming URLs added
 
-The control server should be running even if the app is in background.
+The control server should be running even if the app is in background but the video stream server will pause. See why [here](https://github.com/shogo4405/lf.swift).
 
 ## Contributing
 
@@ -53,15 +59,12 @@ Feel free to submit pull requests.
  * [GCDWebServer](https://github.com/swisspol/GCDWebServer)
 
 ## Authors
- * Victor Nouvellet
+ * Victor Nouvellet - victor (dot) nouvellet (at) gmail (dot) com
 
 ## License
- * KubiServer is released under a BSD License. See LICENSE file for details.
-
-## Related project
-* [Accessors](http://accessors.org)
+ * KubiServer is released under a New BSD License. See LICENSE file for details.
 
 ## See also
- * [Kubi](https://www.revolverobotics.com/)
-
+* [Accessors](http://accessors.org)
+* [Kubi](https://www.revolverobotics.com/)
 
