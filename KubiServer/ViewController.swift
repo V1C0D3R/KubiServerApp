@@ -102,24 +102,11 @@ class ViewController: UIViewController {
     }
     
     @IBAction func liveViewDoubleTapped(_ sender: Any) {
-        self.addMessageToLog(message: "")
-        self.cameraPosition = (self.cameraPosition == .front) ? .back : .front
         
-        /***********************************************************************************************
-         The line below let you change camera (front/back) without restarting the stream.
-         Cost: method attachCameraWithoutStart had to be added to lf's NetStream. If lf modifications
-         become not possible, replace the line below by this line:
-         
-         self.httpStream?.attachCamera(DeviceUtil.device(withPosition: self.cameraPosition))
-         
-         *********************** Method to add to NetStream after ‘pod install‘ ***********************
-         open func attachCameraWithoutStart(_ camera: AVCaptureDevice?) {
-            DispatchQueue.main.async {
-                self.mixer.videoIO.attachCamera(camera)
-            }
-         }
-        ************************************************************************************************/
-        self.httpStream?.attachCameraWithoutStart(DeviceUtil.device(withPosition: self.cameraPosition))
+        let newCameraPosition: AVCaptureDevicePosition = ((self.cameraPosition == .front) ? .back : .front)
+        self.httpStream?.attachCamera(DeviceUtil.device(withPosition: newCameraPosition))
+        self.cameraPosition = newCameraPosition
+        self.addMessageToLog(message: "Camera changed to \(newCameraPosition == .back ? "back" : "front")")
     }
     
     // MARK: Private methods

@@ -1,0 +1,6 @@
+language: objective-c 
+osx_image: xcode8.2
+xcode_project: KubiServer.xcodeproj
+xcode_scheme: KubiServer
+xcode_sdk: iphoneos9.3
+podfile: Podfile
