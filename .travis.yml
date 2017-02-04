@@ -1,6 +1,10 @@
 language: objective-c 
 osx_image: xcode8.2
-xcode_project: KubiServer.xcodeproj
+xcode_workspace: KubiServer.xcworkspace
 xcode_scheme: KubiServer
-xcode_sdk: iphoneos9.3
+xcode_sdk: iphoneos10.2
+script: [
+    "xcodebuild -workspace KubiServer.xcworkspace -scheme KubiServer -sdk iphoneos | xcpretty"
+]
 podfile: Podfile
+os: osx

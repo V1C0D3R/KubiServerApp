@@ -407,7 +407,6 @@
 				DEVELOPMENT_TEAM = JEJ74F7HTM;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/KubiTest",
 					"$(PROJECT_DIR)/KubiServer",
 				);
 				INFOPLIST_FILE = KubiServer/Info.plist;
@@ -433,7 +432,6 @@
 				DEVELOPMENT_TEAM = JEJ74F7HTM;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/KubiTest",
 					"$(PROJECT_DIR)/KubiServer",
 				);
 				INFOPLIST_FILE = KubiServer/Info.plist;
