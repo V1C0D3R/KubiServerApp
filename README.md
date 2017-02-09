@@ -2,6 +2,7 @@
   <img src="https://cloud.githubusercontent.com/assets/4340716/22605826/6cb27cfe-ea06-11e6-803c-f069feb71760.png" alt="Kubi Server App" height="200" width="200"/>
 </p>
 # Kubi Server App [![GitHub license](https://img.shields.io/badge/license-New%20BSD-blue.svg)](https://raw.githubusercontent.com/V1C0D3R/KubiServerApp/master/LICENCE.txt)
+
 ![platform](https://img.shields.io/badge/platform-ios-lightgrey.svg)
 
 Control your Kubi on your local network with a iOS gateway.
@@ -16,25 +17,16 @@ This app consists in:
 ## Installation Requirements
 
 - Xcode
-- Cocoapods
+- Cocoapods >=1.2.0
 
-> *Kubi framework has not been compiled for simulator so you will not be able to install KubiServer app on it.*
+> Important note: *Kubi framework has not been compiled for the iOS simulator so you will not be able to install KubiServer app on it.*
 
 ## Installation
 
 1. Fork or download project.
 - Open Xcode.
 - Add Kubi framework to your project. You can download it [here](https://cdn.kubi.me/?prefix=Files/sdk-ios/).
-- From Terminal, use `pod install` to install [HaishinKit](https://github.com/shogo4405/lf.swift) and [GCDWebServer](https://github.com/swisspol/GCDWebServer) pods.
-- Add this code to NetStream.swift :
- ```swift
- open func attachCameraWithoutStart(_ camera: AVCaptureDevice?) {
- 		DispatchQueue.main.async {
- 			self.mixer.videoIO.attachCamera(camera)
-		}
-}
-```
-         
+- From Terminal, use `pod install` to install [HaishinKit](https://github.com/shogo4405/lf.swift) and [GCDWebServer](https://github.com/swisspol/GCDWebServer) pods.  
 6. Compile on your device.
 
 
@@ -47,15 +39,32 @@ This app consists in:
 
 The control server should be running even if the app is in background but the video stream server will pause. See why [here](https://github.com/shogo4405/lf.swift).
 
+## Play live
+
+Use your favorite HLS player.
+With Quicktime:
+- Open Quicktime.
+- Go to the menu File > Open location...
+- In the window that pops up, enter in the playlist URL given in visible app log. It should be something like that: *`http://IOS_IP_ADDRESS/kubi/playlist.m3u8`*
+
+## Control live
+
+The API is accessible from *`http://IOS_IP_ADDRESS:8080`*
+Absolute and incremental position API are accessed through `/absolute` and `/incremental` paths.
+####Absolute position example:
+> `http://IOS_IP_ADDRESS:8080/absolute?pan=0&panSpeed=40&tilt=-10&tiltSpeed=50`
+
+####Incremental position example: 
+> `http://IOS_IP_ADDRESS:8080/incremental?pan=0&panSpeed=40&tilt=-10&tiltSpeed=50`
+
 ## Contributing
 
 Everything works around one branch (`master`) to follow the [Github Flow](https://guides.github.com/introduction/flow/). 
-
 Feel free to submit pull requests.
-**Test your code** and existing (not yet tested) code if possible before pull requests.
+Test your (not yet tested) code if possible before pull requests.
 
-## Pods used
- * [HaishinKit (formely lf)](https://github.com/shogo4405/lf.swift)
+## Needed pods
+ * [HaishinKit](https://github.com/shogo4405/lf.swift)
  * [GCDWebServer](https://github.com/swisspol/GCDWebServer)
 
 ## Authors
@@ -67,4 +76,5 @@ Feel free to submit pull requests.
 ## See also
 * [Accessors](http://accessors.org)
 * [Kubi](https://www.revolverobotics.com/)
+
 
