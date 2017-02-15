@@ -16,18 +16,20 @@ This app consists in:
 
 ## Installation Requirements
 
-- Xcode
-- Cocoapods >=1.2.0
+- [Xcode](https://developer.apple.com/xcode/)
+- [Cocoapods](https://guides.cocoapods.org/using/getting-started.html) ≥1.2.0
 
 > Important note: *Kubi framework has not been compiled for the iOS simulator so you will not be able to install KubiServer app on it.*
 
 ## Installation
 
-1. Fork or download project.
-- Open Xcode.
-- Add Kubi framework to your project. You can download it [here](https://cdn.kubi.me/?prefix=Files/sdk-ios/).
-- From Terminal, use `pod install` to install [HaishinKit](https://github.com/shogo4405/lf.swift) and [GCDWebServer](https://github.com/swisspol/GCDWebServer) pods.  
-6. Compile on your device.
+1. Clone or [download](https://github.com/V1C0D3R/KubiServerApp/archive/master.zip) project.
+- From root project directory in Terminal (the one where Podfile file is), run `pod repo update` to update source repos and then run `pod install`. It will install [HaishinKit](https://github.com/shogo4405/lf.swift) and [GCDWebServer](https://github.com/swisspol/GCDWebServer) pods.
+- Run `open KubiServer.xcworkspace` to open the project workspace in Xcode.
+- Download last Kubi framework: from [this page](https://cdn.kubi.me/?prefix=Files/sdk-ios/), download KubiDeviceSDK-iOS-X.X.zip file and unzip it. Only KubiDeviceSDK version 1.5 has been tested but next versions should work.
+- From the unzipped folder, drag and drop __KubiDeviceSDK.framework__ file to Xcode under __Frameworks__ folder. Make sure to check Copy items if needed, so that the files actually copy into the new project instead of just adding a reference. Frameworks need their own code, not references, to be independent.<img width="450" alt="screen shot 2017-02-15 at 4 01 36 pm" src="https://cloud.githubusercontent.com/assets/4340716/23001320/9136f5b8-f399-11e6-96af-3f3afcaf585c.png">
+- Add the framework to the "Embedded binaries" section in the "General" tab of KubiServer app target.![addtoembeddedbinaries](https://cloud.githubusercontent.com/assets/4340716/23001293/7200a8d8-f399-11e6-8152-8624a861f8e3.png)
+6. Make sure your device is connected to your computer and Build & Run by using ⌘+R from Xcode.
 
 
 ## User Steps after installation
