@@ -2,7 +2,7 @@ PODS:
   - GCDWebServer (3.3.3):
     - GCDWebServer/Core (= 3.3.3)
   - GCDWebServer/Core (3.3.3)
-  - lf (0.5.11):
+  - lf (0.5.5):
     - XCGLogger (~> 4.0.0)
   - XCGLogger (4.0.0):
     - XCGLogger/Core (= 4.0.0)
@@ -10,13 +10,13 @@ PODS:
 
 DEPENDENCIES:
   - GCDWebServer (~> 3.0)
-  - lf (~> 0.5.11)
+  - lf (= 0.5.5)
 
 SPEC CHECKSUMS:
   GCDWebServer: 1c39a1f0763e4eb492bee021e4270fce097d3555
-  lf: d545a3d3f5c601562c4eba439463ac4eac7d594e
+  lf: 87bc059fd157b04438eba0a0c9deb71f7874459f
   XCGLogger: 38063ea89b4c8b23232d18efd2e12eb0005f3ea4
 
-PODFILE CHECKSUM: 395d52e723ff9d5c7edc09fe254b1d607c46a66b
+PODFILE CHECKSUM: 3c5c81305e5d890af3a54688026c60935f99aa47
 
 COCOAPODS: 1.2.0

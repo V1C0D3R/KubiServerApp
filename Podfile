@@ -9,5 +9,5 @@ inhibit_all_warnings!
 
 target 'KubiServer' do
  pod 'GCDWebServer', '~> 3.0'
- pod 'lf', '~> 0.5.11'
+ pod 'lf', '= 0.5.5'
 end
