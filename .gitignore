@@ -5,6 +5,7 @@
 
 # Kubi framework
 KubiServer/KubiDeviceSDK.framework/
+KubiDeviceSDK.framework/
 
 # Pods
 Pods/

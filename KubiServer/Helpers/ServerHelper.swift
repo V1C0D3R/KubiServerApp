@@ -32,6 +32,7 @@ class ServerHelper {
     static let sharedInstance = ServerHelper()
     var kubiManager: KubiManager? = nil
     var delegate: ServerHelperDelegate? = nil
+    var lastImageCallback: ((_ compressionQuality: CGFloat)->Data?)? = nil
     
     // Paths
     enum ServerPath: String {
@@ -136,10 +137,11 @@ class ServerHelper {
             return
         } else if supportedPath == .lastImage {
             //TODO: Pick UIImage from camera and use this as fallback
-            let image = UIImage(named: "AppIcon60x60") ?? UIImage(named: "AppIcon60x60") ?? UIImage()
-            let data: Data = UIImagePNGRepresentation(image)!
-            let response = GCDWebServerDataResponse(data: data, contentType: "image/png")
-            completionBlock?(response)
+            if let imageData = self.lastImageCallback?(0.2) {
+                let response = GCDWebServerDataResponse(data: imageData, contentType: "image/jpeg")
+                completionBlock?(response)
+            }
+            
             return
         }
         

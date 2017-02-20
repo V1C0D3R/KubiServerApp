@@ -36,6 +36,7 @@ class ViewController: UIViewController {
     fileprivate var isScanning: Bool = false
     fileprivate var kubiManager: KubiManager = KubiManager.sharedInstance
     fileprivate var serverHelper: ServerHelper = ServerHelper.sharedInstance
+    fileprivate var visualSaver: VisualSaver = VisualSaver()
     fileprivate var cameraPosition:AVCaptureDevicePosition = .front
     fileprivate var autoConnect: Bool {
         get {
@@ -114,6 +115,17 @@ class ViewController: UIViewController {
     private func configureWebServer() {
         self.configureServerHelperDelegate()
         self.serverHelper.kubiManager = self.kubiManager
+        self.serverHelper.lastImageCallback = { (compressionQuality: CGFloat)->Data? in
+            if let ciimage = self.visualSaver.lastImage {
+                let context:CIContext = CIContext.init(options: nil)
+                let cgImage:CGImage = context.createCGImage(ciimage, from: ciimage.extent)!
+                let image:UIImage = UIImage.init(cgImage: cgImage)
+                if let data: Data = UIImageJPEGRepresentation(image, compressionQuality) {
+                    return data
+                }
+            }
+            return nil
+        }
         
         if self.serverHelper.initServer(), let safeServerUrl = self.serverHelper.serverUrl?.absoluteString {
             let successMessage = "Visit \(safeServerUrl) in your web browser"
@@ -326,6 +338,13 @@ extension ViewController {
         if let safeHttpStream = self.httpStream {
             let lfView:LFView = LFView(frame: self.liveView.bounds)
             lfView.attachStream(httpStream)
+            
+            //Last image output setup
+            if httpStream?.registerEffect(video: self.visualSaver) ?? false {
+                print("lastImage configured successfully")
+            }
+            
+            // Streaming HTTP Service setup
             self.streamingHttpService = HTTPService(domain: "", type: "_http._tcp", name: "lf", port: 80)
             self.streamingHttpService?.startRunning()
             self.streamingHttpService?.addHTTPStream(safeHttpStream)
@@ -333,8 +352,8 @@ extension ViewController {
             self.liveView.addSubview(lfView)
             
             return true
-        } else {
-            return false
         }
+        
+        return false
     }
 }

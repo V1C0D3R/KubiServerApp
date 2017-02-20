@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		57067C301E580E95007DF093 /* VisualSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57067C2F1E580E95007DF093 /* VisualSaver.swift */; };
 		570D72951E3FC98C0072AD75 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 570D72941E3FC98C0072AD75 /* index.html */; };
 		57341D561E3821B80051C8C4 /* ServerHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57341D551E3821B80051C8C4 /* ServerHelper.swift */; };
 		574E1EDE1E3199F200ED5425 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 574E1EDC1E3199F200ED5425 /* Main.storyboard */; };
@@ -19,7 +20,21 @@
 		57906D6B1E557C6100225AEF /* Pods_KubiServer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AB305EE00F478FE6DB911CD /* Pods_KubiServer.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		5722516A1E581320004CBC45 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		57067C2F1E580E95007DF093 /* VisualSaver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisualSaver.swift; sourceTree = "<group>"; };
 		570D72941E3FC98C0072AD75 /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
 		57341D531E38125B0051C8C4 /* KubiTest-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "KubiTest-Bridging-Header.h"; sourceTree = "<group>"; };
 		57341D541E3814AF0051C8C4 /* KubiTest-Swift.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "KubiTest-Swift.h"; sourceTree = "<group>"; };
@@ -117,6 +132,7 @@
 			children = (
 				578B62021E44FB6C00225889 /* RRDeviceSDK+Swift.h */,
 				578B62031E44FB6C00225889 /* RRDeviceSDK+Swift.m */,
+				57067C2F1E580E95007DF093 /* VisualSaver.swift */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -143,6 +159,7 @@
 				574E1ECE1E3199F100ED5425 /* Resources */,
 				EC384E381A4C79A4D9A9C1D8 /* [CP] Embed Pods Frameworks */,
 				B763215AA904276C10992736 /* [CP] Copy Pods Resources */,
+				5722516A1E581320004CBC45 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -256,6 +273,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				57067C301E580E95007DF093 /* VisualSaver.swift in Sources */,
 				57341D561E3821B80051C8C4 /* ServerHelper.swift in Sources */,
 				57557D871E36EC1D004A0044 /* ViewController.swift in Sources */,
 				578B62041E44FB6C00225889 /* RRDeviceSDK+Swift.m in Sources */,
