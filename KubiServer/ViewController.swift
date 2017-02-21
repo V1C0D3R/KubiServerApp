@@ -115,10 +115,10 @@ class ViewController: UIViewController {
     private func configureWebServer() {
         self.configureServerHelperDelegate()
         self.serverHelper.kubiManager = self.kubiManager
-        self.serverHelper.lastImageCallback = { (compressionQuality: CGFloat)->Data? in
-            if let ciimage = self.visualSaver.lastImage {
-                let context:CIContext = CIContext.init(options: nil)
-                let cgImage:CGImage = context.createCGImage(ciimage, from: ciimage.extent)!
+        self.serverHelper.lastImageCallback = { (compressionQuality: CGFloat, filterName: String?)->Data? in
+            self.visualSaver.filterName = filterName
+            if let ciimage = self.visualSaver.lastImage, let cgImage:CGImage = CIContext(options: nil).createCGImage(ciimage, from: ciimage.extent) {
+                
                 let image:UIImage = UIImage.init(cgImage: cgImage)
                 if let data: Data = UIImageJPEGRepresentation(image, compressionQuality) {
                     return data

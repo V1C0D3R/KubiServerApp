@@ -11,9 +11,36 @@ import CoreImage
 import lf
 
 class VisualSaver: VisualEffect {
-    var lastImage:CIImage? = nil
+    var lastRawImage: CIImage? = nil
+    var lastImage:CIImage? {
+        guard let safeRawImage = self.lastRawImage else {
+            return nil
+        }
+        let filteredImage: CIImage
+        
+        if let safeFilterName = self.filterName, self.supportedFilters.contains(safeFilterName) {
+            filteredImage = self.applyFilterChain(to: safeRawImage, filterName: safeFilterName)
+        } else {
+            filteredImage = safeRawImage
+        }
+        
+        return filteredImage
+    }
+    var filterName: String? = nil
+    
+    let supportedFilters: Array<String> = CIFilter.filterNames(inCategories: nil)
+    
     override func execute(_ image: CIImage) -> CIImage {
-        self.lastImage = super.execute(image)
+        
+        self.lastRawImage = super.execute(image)
         return image
+    }
+    
+    func applyFilterChain(to image: CIImage, filterName: String) -> CIImage {
+        // The CIPhotoEffectInstant filter takes only an input image
+        let colorFilter = CIFilter(name: filterName, withInputParameters:
+            [kCIInputImageKey: image])!
+        
+        return colorFilter.outputImage!
     }
 }
