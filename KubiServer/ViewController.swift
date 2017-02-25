@@ -23,7 +23,7 @@ import VideoToolbox
 class ViewController: UIViewController {
     
     @IBOutlet weak var scanIndicator: UIActivityIndicatorView?
-    @IBOutlet weak var scanButton: UIButton?
+    @IBOutlet weak var scanButton: UIButton!
     @IBOutlet weak var connectionView: UIView?
     @IBOutlet weak var autoConnectSwitch: UISwitch!
     @IBOutlet weak var controlView: UIView?
@@ -158,6 +158,8 @@ class ViewController: UIViewController {
             }
             
             self.connectionAlert = UIAlertController(title: "Choose your device", message: "Here is the list of available devices", preferredStyle: .actionSheet)
+            self.connectionAlert.popoverPresentationController?.sourceRect = self.scanButton.bounds
+            self.connectionAlert.popoverPresentationController?.sourceView = self.scanButton
             
             for (index, device) in deviceList.enumerated() {
                 guard let safeDevice = device as? RRKubi else {
