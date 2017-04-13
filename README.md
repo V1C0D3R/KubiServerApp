@@ -1,9 +1,9 @@
 <p align="center">
   <img src="https://cloud.githubusercontent.com/assets/4340716/22605826/6cb27cfe-ea06-11e6-803c-f069feb71760.png" alt="Kubi Server App" height="200" width="200"/>
 </p>
-# Kubi Server App [![GitHub license](https://img.shields.io/badge/license-New%20BSD-blue.svg)](https://raw.githubusercontent.com/V1C0D3R/KubiServerApp/master/LICENCE.txt)
 
-![platform](https://img.shields.io/badge/platform-ios-lightgrey.svg)
+# Kubi Server App 
+[![GitHub license](https://img.shields.io/badge/license-New%20BSD-blue.svg)](https://raw.githubusercontent.com/V1C0D3R/KubiServerApp/master/LICENCE.txt) ![platform](https://img.shields.io/badge/platform-ios-lightgrey.svg)
 
 Control your Kubi on your local network with a iOS gateway.
 
@@ -53,10 +53,11 @@ With Quicktime:
 
 The API is accessible from *`http://IOS_IP_ADDRESS:8080`*
 Absolute and incremental position API are accessed through `/absolute` and `/incremental` paths.
-####Absolute position example:
+
+#### Absolute position example:
 > `http://IOS_IP_ADDRESS:8080/absolute?pan=0&panSpeed=40&tilt=-10&tiltSpeed=50`
 
-####Incremental position example: 
+#### Incremental position example: 
 > `http://IOS_IP_ADDRESS:8080/incremental?pan=0&panSpeed=40&tilt=-10&tiltSpeed=50`
 
 ## Contributing
