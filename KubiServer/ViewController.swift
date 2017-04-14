@@ -222,6 +222,7 @@ class ViewController: UIViewController {
     }
     
     func addMessageToLog(message: String) {
+        print(message)
         self.webServerLog.text = self.webServerLog.text.appending("\(message)\n")
     }
     
@@ -326,14 +327,21 @@ extension ViewController {
         self.httpStream?.attachCamera(self.camera)
         self.httpStream?.attachAudio(AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeAudio))
         
-        self.httpStream?.videoSettings = [
-            "bitrate": 160 * 1024, // video output bitrate
-            "width": 272,
-            "height": 480,
-            //            "dataRateLimits": [160 * 1024 / 8, 1], //optional kVTCompressionPropertyKey_DataRateLimits property
-            "profileLevel": kVTProfileLevel_H264_Baseline_5_1, // H264 Profile require "import VideoToolbox"
-            "maxKeyFrameIntervalDuration": 0.2, // key frame / sec
-        ]
+//        self.httpStream?.videoSettings = [
+////            "bitrate": 160 * 1024, // video output bitrate
+////            "width": 272,
+////            "height": 480,
+////            //            "dataRateLimits": [160 * 1024 / 8, 1], //optional kVTCompressionPropertyKey_DataRateLimits property
+////            "profileLevel": kVTProfileLevel_H264_Baseline_5_1, // H264 Profile require "import VideoToolbox"
+////            "maxKeyFrameIntervalDuration": 0.2, // key frame / sec
+//            
+//            "width": 272, // video output width
+//            "height": 480, // video output height
+//            "bitrate": 4 * 1024 * 1024, // video output bitrate
+//            //"dataRateLimits": [1024 * 1024 / 8, 1], optional kVTCompressionPropertyKey_DataRateLimits property
+//            "profileLevel": kVTProfileLevel_H264_Baseline_AutoLevel, // H264 Profile require "import VideoToolbox"
+//            "maxKeyFrameIntervalDuration": 2, // key frame / sec
+//        ]
         
         self.httpStream?.publish("kubi")
         
