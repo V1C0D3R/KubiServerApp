@@ -191,8 +191,8 @@ class ServerHelper {
                 self.delegate?.serverHelperFailedToSatisfyRequestCommand(error: error)
             }
             
-        } else {
-            let controlUrlExample = "\"\(request.url.baseURL?.absoluteString)?pan=0&panSpeed=0&tilt=20&tiltSpeed=150\""
+        } else if let baseURL = request.url.baseURL {
+            let controlUrlExample = "\"\(baseURL.absoluteString)?pan=0&panSpeed=0&tilt=20&tiltSpeed=150\""
             let errorDescription = "Missing parameter(s). Needed parameters: pan, panSpeed, tilt, tiltSpeed.<br/>You can use <a href=\(controlUrlExample)>this example</a>."
             print(errorDescription)
             let error = self.error(withDescription: errorDescription, code: 200)
