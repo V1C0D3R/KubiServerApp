@@ -12,11 +12,17 @@ DEPENDENCIES:
   - GCDWebServer (~> 3.0)
   - lf (= 0.5.5)
 
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - GCDWebServer
+    - lf
+    - XCGLogger
+
 SPEC CHECKSUMS:
   GCDWebServer: 1c39a1f0763e4eb492bee021e4270fce097d3555
-  lf: 87bc059fd157b04438eba0a0c9deb71f7874459f
+  lf: 8a6e40734e3d3db29bc2149e58da914de8326efe
   XCGLogger: 38063ea89b4c8b23232d18efd2e12eb0005f3ea4
 
 PODFILE CHECKSUM: 3c5c81305e5d890af3a54688026c60935f99aa47
 
-COCOAPODS: 1.2.0
+COCOAPODS: 1.5.3
